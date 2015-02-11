@@ -59,27 +59,27 @@ class Seat:
 
         # The Sessions array is an array of all current sessions of this seat, each
         # encoded in a 2-tuple consisting of the ID and the object path
-        self.sessions = self.dbus_props["Sessions"]
+        self.sessions = self.dbus_props.get("Sessions",None)
 
         # ActiveSession encodes the currently active session if there is one. It is a
         # 2-tuple consisting of session id and object path
-        self.active_session = self.dbus_props["ActiveSession"]
+        self.active_session = self.dbus_props.get("ActiveSession",None)
 
         # CanMultiSession encodes whether the session is multi-session capable
-        self.can_multisession = bool(self.dbus_props["CanMultiSession"])
+        self.can_multisession = bool(self.dbus_props.get("CanMultiSession",None))
 
         # CanTTY whether it is suitable for text logins
-        self.can_tty = bool(self.dbus_props["CanTTY"])
+        self.can_tty = bool(self.dbus_props.get("CanTTY",None))
 
         # CanGraphical whether it is suitable for graphical sessions
-        self.can_graphical = bool(self.dbus_props["CanGraphical"])
+        self.can_graphical = bool(self.dbus_props.get("CanGraphical",None))
 
         # The IdleHint, IdleSinceHint, IdleSinceHintMonotonic properties encode
         # the idle state, similar to the one exposed on the Manager object, but
         # specific for this seat
-        self.idle_hint = bool(self.dbus_props["IdleHint"])
-        self.idle_since_hint = self.dbus_props["IdleSinceHint"]
-        self.idle_since_hint_monotonic = self.dbus_props["IdleSinceHintMonotonic"]
+        self.idle_hint = bool(self.dbus_props.get("IdleHint",None))
+        self.idle_since_hint = self.dbus_props.get("IdleSinceHint",None)
+        self.idle_since_hint_monotonic = self.dbus_props.get("IdleSinceHintMonotonic",None)
 
     def log_summary(self, prefix=" - "):
         """
@@ -146,16 +146,16 @@ class User:
 
         # The UID and GID properties encode the Unix UID and primary GID of the
         # user.
-        self.uid = self.dbus_props["UID"]
-        self.gid = self.dbus_props["GID"]
+        self.uid = self.dbus_props.get("UID",None)
+        self.gid = self.dbus_props.get("GID",None)
 
         # The Name property encodes the user name.
 
         # Timestamp and TimestampMonotonic encode the login time of the user in
         # usec since the epoch, in the CLOCK_REALTIME resp. CLOCK_MONOTONIC
         # clocks.
-        self.timestamp = self.dbus_props["Timestamp"]
-        self.timestamp_monotonic = self.dbus_props["TimestampMonotonic"]
+        self.timestamp = self.dbus_props.get("Timestamp",None)
+        self.timestamp_monotonic = self.dbus_props.get("TimestampMonotonic",None)
 
         # RuntimePath encodes the runtime path of the user, i.e.
         # $XDG_RUNTIME_DIR, for details see the XDG Basedir Specification.
@@ -166,22 +166,22 @@ class User:
         # MUST be owned by the user, and he MUST be the only one having read
         # and write access to it. Its Unix access mode MUST be 0700.
         # (http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-        self.runtime_path = self.dbus_props["RuntimePath"]
+        self.runtime_path = self.dbus_props.get("RuntimePath",None)
 
         # Service contains the name of the user systemd service unit name of
         # this user. Each logged in user gets a user service unit assigned that
         # runs a user systemd instance. This is usually an instance of
         # user@.service.
-        self.service = self.dbus_props["Service"]
+        self.service = self.dbus_props.get("Service",None)
 
         # Slice contains the name of the user systemd slice unit name of this
         # user. Each logged in user gets a private slice.
-        self.slice = self.dbus_props["Slice"]
+        self.slice = self.dbus_props.get("Slice",None)
 
         # Display encodes which graphical session should be used as primary UI
         # display for the use. It is a structure encoding session ID and object
         # path of the session to use.
-        self.display = self.dbus_props["Display"]
+        self.display = self.dbus_props.get("Display",None)
 
         # State encodes the user state, one of "offline", "lingering",
         # "online", "active", "closing". See sd_uid_get_state(3) for more
@@ -197,18 +197,18 @@ class User:
         # client code should be written to be robust in regards to additional
         # state strings being returned.
         # (http://www.freedesktop.org/software/systemd/man/sd_uid_get_state.html)
-        self.state = self.dbus_props["State"]
+        self.state = self.dbus_props.get("State",None)
 
         # Sessions is an array of structures encoding all current sessions of
         # the user. Each structure consists of ID and object path.
-        self.sessions = self.dbus_props["Sessions"]
+        self.sessions = self.dbus_props.get("Sessions",None)
 
         # The IdleHint, IdleSinceHint, IdleSinceHintMonotonic properties encode
         # the idle hint state of the user, similar to the Manager's properties,
         # but specific for this user.
-        self.idle_hint = bool(self.dbus_props["IdleHint"])
-        self.idle_since_hint = self.dbus_props["IdleSinceHint"]
-        self.idle_since_hint_monotonic = self.dbus_props["IdleSinceHintMonotonic"]
+        self.idle_hint = bool(self.dbus_props.get("IdleHint",None))
+        self.idle_since_hint = self.dbus_props.get("IdleSinceHint",None)
+        self.idle_since_hint_monotonic = self.dbus_props.get("IdleSinceHintMonotonic",None)
 
     def log_summary(self, prefix=" - "):
         desc = []
@@ -282,55 +282,55 @@ class Session:
         # Timestamp and TimestampMonotonic encode the usec timestamp since the
         # epoch when the session was created, in CLOCK_REALTIME resp.
         # CLOCK_MONOTONIC.
-        self.timestamp = self.dbus_props["Timestamp"]
-        self.timestamp_monotonic = self.dbus_props["TimestampMonotonic"]
+        self.timestamp = self.dbus_props.get("Timestamp",None)
+        self.timestamp_monotonic = self.dbus_props.get("TimestampMonotonic",None)
 
         # Seat encodes the seat this session belongs to, if there is any. This
         # is a structure consisting of the ID and the seat object path.
-        self.seat = self.dbus_props["Seat"]
+        self.seat = self.dbus_props.get("Seat",None)
 
         # TTY encodes the kernel TTY path of the session if this is a text
         # login. If not this is an empty string.
-        self.tty = self.dbus_props["TTY"]
+        self.tty = self.dbus_props.get("TTY",None)
 
         # Display encodes the X11 display name if this is a graphical login. If
         # not this is an empty string.
-        self.display = self.dbus_props["Display"]
+        self.display = self.dbus_props.get("Display",None)
 
         # Remote encodes whether the session is local or remote.
-        self.remote = bool(self.dbus_props["Remote"])
+        self.remote = bool(self.dbus_props.get("Remote",None))
 
         # RemoteHost and RemoteUser encode the remote host and user if this is
         # a remote session, or an empty string otherwise.
-        self.remote_host = self.dbus_props["RemoteHost"]
-        self.remote_user = self.dbus_props["RemoteUser"]
+        self.remote_host = self.dbus_props.get("RemoteHost",None)
+        self.remote_user = self.dbus_props.get("RemoteUser",None)
 
         # Service encodes the PAM service name that registered the session.
-        self.service = self.dbus_props["Service"]
+        self.service = self.dbus_props.get("Service",None)
 
         # Scope contains the systemd scope unit name of this session.
-        self.scope = self.dbus_props["Scope"]
+        self.scope = self.dbus_props.get("Scope",None)
 
         # Leader encodes the PID of the process that registered the session.
-        self.leader = self.dbus_props["Leader"]
+        self.leader = self.dbus_props.get("Leader",None)
 
         # Audit encodes the Kernel Audit session ID of the session, if auditing is available.
-        self.audit = self.dbus_props["Audit"]
+        self.audit = self.dbus_props.get("Audit",None)
 
         # Type encodes the session type. It's one of "unspecified" (for cron
         # PAM sessions and suchlike), "tty" (for text logins) or "x11" (for
         # graphical logins).
-        self.type = self.dbus_props["Type"]
+        self.type = self.dbus_props.get("Type",None)
 
         # Class encodes the session class. It's one of "user" (for normal user
         # sessions), "greeter" (for display manager pseudo-sessions),
         # "lock-screen" (for display lock screens).
-        self.session_class = self.dbus_props["Class"]
+        self.session_class = self.dbus_props.get("Class",None)
 
         # Active is a boolean that is true if the session is active, i.e.
         # currently in the foreground. This field is semi-redundant due to
         # State.
-        self.active = bool(self.dbus_props["Active"])
+        self.active = bool(self.dbus_props.get("Active",None))
 
         # State encodes the session state and one of "online", "active",
         # "closing". See sd_session_get_state(3) for more information about the
@@ -344,14 +344,14 @@ class Session:
         # client code should be written to be robust in regards to additional
         # state strings being returned.
         # (http://stuff.onse.fi/man?program=sd_session_get_state&section=3)
-        self.state = self.dbus_props["State"]
+        self.state = self.dbus_props.get("State",None)
 
         # IdleHint, IdleSinceHint, IdleSinceHintMonotonic encapsulate the idle
         # hint state of this session, similar to how the respective properties
         # on the manager object do it for the whole system.
-        self.idle_hint = bool(self.dbus_props["IdleHint"])
-        self.idle_since_hint = self.dbus_props["IdleSinceHint"]
-        self.idle_since_hint_monotonic = self.dbus_props["IdleSinceHintMonotonic"]
+        self.idle_hint = bool(self.dbus_props.get("IdleHint",None))
+        self.idle_since_hint = self.dbus_props.get("IdleSinceHint",None)
+        self.idle_since_hint_monotonic = self.dbus_props.get("IdleSinceHintMonotonic",None)
 
     def log_summary(self, prefix=" - "):
         desc = []
